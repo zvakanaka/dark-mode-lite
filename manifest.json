@@ -6,14 +6,11 @@
   "web_accessible_resources": [
     "popup.js"
   ],
-  "background": {
-    "scripts": []
-  },
   "browser_action": {
     "default_title": "Dark Mode Settings",
     "default_popup": "popup.html"
   },
-  "permissions": ["contextMenus", "storage", "activeTab", "tabs"],
+  "permissions": ["storage", "tabs"],
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
