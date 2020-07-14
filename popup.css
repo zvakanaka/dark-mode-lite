@@ -1,0 +1,11 @@
+body {
+  font-family: monospace;
+}
+body:not([dark-mode="false"]) {
+  background: black;
+  color: white;
+}
+.input-container {
+  display: flex;
+  align-items: center;
+}
