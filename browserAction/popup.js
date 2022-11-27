@@ -1,3 +1,6 @@
+if (typeof browser === "undefined") {
+    var browser = chrome;
+}
 async function getDarkMode() {
   // https://github.com/mdn/webextensions-examples/blob/master/stored-credentials/storage.js
   const storedObj = await browser.storage.local.get();
