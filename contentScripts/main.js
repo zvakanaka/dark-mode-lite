@@ -24,24 +24,43 @@ function setBodyAttr(value) {
   }
 }
 
+function alreadyDark() {
+  const colorSets = Array.from(document.elementsFromPoint(0, 0)).map(el => {
+    const bg = getComputedStyle(el).background
+    console.log(bg)
+    const rgb = bg.startsWith('rgb') ? bg?.split("(")[1].split(")")[0].split(",").map(colorStr => parseInt(colorStr, 10)) : null
+    return rgb
+  }).filter(Boolean)
+  // console.log('colorSets', colorSets)
+  const luminosity = colorSets?.[0]?.reduce((acc, cur) => {
+    acc += cur
+    return acc
+  }, 0)
+  // console.log('luminosity', luminosity, luminosity < 255)
+  return luminosity && luminosity < 255
+}
+
 async function getDarkMode() {
   const storedObj = await chrome.storage.local.get('darkMode');
   if (storedObj === null || typeof storedObj === 'undefined') {
     setDarkMode(true);
-    return true;
+    return true && !alreadyDark();
   }
-  setBodyAttr(storedObj.darkMode);
-  return storedObj.darkMode;
+  const isDarkMode = storedObj.darkMode && !alreadyDark()
+
+  // setBodyAttr(storedObj.darkMode);
+  return isDarkMode;
 }
 
 (async () => {
+  // console.log('checking dark mode again')
   const isDarkMode = await getDarkMode();
   setBodyAttr(isDarkMode);
 })();
 
 // Listen for messages from the background script (popup.js)
- chrome.runtime.onMessage.addListener((message) => {
+chrome.runtime.onMessage.addListener((message) => {
   if (message.command === 'set-dark-mode') {
-    setBodyAttr(message.isDarkMode);
+    setBodyAttr(message.isDarkMode && !alreadyDark());
   }
 });
