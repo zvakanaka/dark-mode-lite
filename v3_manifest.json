@@ -2,17 +2,29 @@
   "manifest_version": 3,
   "name": "Dark Mode Lite",
   "description": "A lightweight dark mode",
-  "version": "1.1.0",
-  "web_accessible_resources": [{
-    "resources": ["browserAction/popup.js"],
-    "matches": [],
-    "extension_ids": []
-  }],
-  "permissions": ["storage", "tabs"],
+  "version": "2.0.0",
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "browserAction/popup.js"
+      ],
+      "matches": [],
+      "extension_ids": []
+    }
+  ],
+  "permissions": [
+    "storage",
+    "tabs"
+  ],
   "content_scripts": [
     {
-      "matches": ["<all_urls>"],
-      "js": ["vendor/browser-polyfill.min.js", "contentScripts/main.js"],
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "vendor/browser-polyfill.min.js",
+        "contentScripts/main.js"
+      ],
       "run_at": "document_end",
       "all_frames": true
     }
