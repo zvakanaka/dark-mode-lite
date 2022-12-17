@@ -1,33 +1,37 @@
-let firstRun = true;
-
 function addDarkModeStyle() {
   const style = document.createElement('style');
+  style.id = 'dark-mode-lite';
   style.textContent = `
-  body[dark-mode-light="true"] {
-    filter: invert(100%);
-    background: black;
+  :root {
+    filter: invert(100%) hue-rotate(180deg);
+    background: white;
   }
-  body[dark-mode-light="true"] img,
-  body[dark-mode-light="true"] video,
-  body[dark-mode-light="true"] picture,
-  body[dark-mode-light="true"] canvas,
-  body[dark-mode-light="true"] [style*="background-image"] {
-    filter: invert(100%);
+  img,
+  video,
+  picture,
+  canvas,
+  [style*="background-image"] {
+    filter: invert(100%) hue-rotate(180deg);
   }`;
   document.querySelector('head').appendChild(style);
 }
-function setBodyAttr(value) {
-  document.body.setAttribute('dark-mode-light', value);
-  if (value && firstRun) {
+function removeDarkModeStyle() {
+  const style = document.querySelector('#dark-mode-lite')
+  if (style) {
+    style.remove();
+  }
+}
+function setDarkMode(value) {
+  if (value) {
     addDarkModeStyle();
-    firstRun = false;
+  } else {
+    removeDarkModeStyle()
   }
 }
 
 function alreadyDark() {
   const colorSets = Array.from(document.elementsFromPoint(0, 0)).map(el => {
     const bg = getComputedStyle(el).background
-    console.log(bg)
     const rgb = bg.startsWith('rgb') ? bg?.split("(")[1].split(")")[0].split(",").map(colorStr => parseInt(colorStr, 10)) : null
     return rgb
   }).filter(Boolean)
@@ -48,19 +52,17 @@ async function getDarkMode() {
   }
   const isDarkMode = storedObj.darkMode && !alreadyDark()
 
-  // setBodyAttr(storedObj.darkMode);
   return isDarkMode;
 }
 
 (async () => {
-  // console.log('checking dark mode again')
   const isDarkMode = await getDarkMode();
-  setBodyAttr(isDarkMode);
+  setDarkMode(isDarkMode);
 })();
 
 // Listen for messages from the background script (popup.js)
 chrome.runtime.onMessage.addListener((message) => {
   if (message.command === 'set-dark-mode') {
-    setBodyAttr(message.isDarkMode && !alreadyDark());
+    setDarkMode(message.isDarkMode && !alreadyDark());
   }
 });
