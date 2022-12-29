@@ -1,5 +1,5 @@
 if (typeof browser === "undefined") {
-    var browser = chrome;
+  var browser = chrome;
 }
 async function getDarkMode() {
   // https://github.com/mdn/webextensions-examples/blob/master/stored-credentials/storage.js
@@ -11,7 +11,7 @@ async function getDarkMode() {
   return storedObj.darkMode;
 }
 
-async function setDarkMode(value, cb = () => {}) {
+async function setDarkMode(value, cb = () => { }) {
   await chrome.storage.local.set({ darkMode: value });
   cb();
 }
@@ -57,3 +57,4 @@ function messageDarkMode(isDarkMode) {
     });
   });
 })();
+
