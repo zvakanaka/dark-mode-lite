@@ -1,6 +1,6 @@
 {
   "name": "dark-mode-lite",
-  "version": "2.2.0",
+  "version": "2.3.0",
   "description": "",
   "scripts": {
     "build:v2": "npm run v2 && npm run zip",
