@@ -1,5 +1,15 @@
 const DEBUG = false;
 const TREAT_PAGE = false; // experimental
+const IGNORE_SELECTORS = [
+  'img',
+  'video',
+  'picture',
+  'canvas',
+  'iframe',
+  '[aria-label$="Video Player"]',
+  '[style*="background-image"]',
+  '[data-dark-mode-lite-ignore]'
+];
 
 function addDarkModeStyle() {
   const style = document.createElement('style');
@@ -9,13 +19,8 @@ function addDarkModeStyle() {
     filter: invert(100%) hue-rotate(180deg);
     background: white;
   }
-  img,
-  video,
-  picture,
-  canvas,
-  iframe,
-  [style*="background-image"],
-  [data-dark-mode-lite-ignore] {
+  
+  ${IGNORE_SELECTORS.join(',\n')} {
     filter: invert(100%) hue-rotate(180deg);
   }
 
@@ -80,7 +85,7 @@ function alreadyDark() {
     samplesX: 10,
     samplesY: 10,
     useOffset: false,
-    timeoutMS: 1000,
+    timeoutMS: 0,
     threshold: 765 / 2,
   };
   const samplePoints = [];
@@ -107,17 +112,26 @@ function alreadyDark() {
 
   const sampleEls = DEBUG && document.querySelectorAll(".dark-mode-lite-sample"); // sampleEls only exists if DEBUG is on
   const totalLuminosity = samplePoints.reduce((acc, samplePoint, i) => {
+    // TODO: handle pages with large spaces filled with not found/ignored elements
     const { x, y } = samplePoint;
-    const colorSets = Array.from(document.elementsFromPoint(x, y))
+    const pointElementsWithColor = Array.from(document.elementsFromPoint(x, y))
       .filter((el) => !el.classList.contains(".dark-mode-lite-sample"))
-      .map(getBgColor)
-      .filter(Boolean);
+      .filter((el) => IGNORE_SELECTORS?.every(selector => !el.matches(selector)))
+      .map(el => ({ colorSet: getBgColor(el), el }))
+      .filter(elementWithColor => Boolean(elementWithColor.colorSet));
 
-    // fall back to assuming an element has maximum luminosity 
+    // fall back to assuming an element has maximum luminosity
+    const fallback = 765
     const luminosity =
-      colorSets?.[0]?.reduce((acc, cur) => (acc += cur), 0) || 255 * 3;
+      pointElementsWithColor?.[0]?.colorSet?.reduce((acc, cur) => (acc += cur), 0) || fallback;
 
-    if (DEBUG) sampleEls[i].dataset.luminosity = luminosity; // sampleEls only exist if DEBUG is on
+    if (DEBUG) {
+      sampleEls[i].dataset.luminosity = `${luminosity}
+${pointElementsWithColor[0].el.tagName}
+${pointElementsWithColor[0].el?.hasAttributes() && Array.from(pointElementsWithColor[0].el?.attributes)
+          ?.filter(attr => attr.name !== 'class')
+          .map(attr => `${attr.name}='${attr.value}'`)} `; // sampleEls only exist if DEBUG is on
+    }
 
     return (acc += luminosity);
   }, 0);
