@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "Dark Mode Lite",
   "description": "A lightweight dark mode",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "web_accessible_resources": [
     "browserAction/popup.js"
   ],
