@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Dark Mode Lite",
   "description": "A lightweight dark mode",
-  "version": "2.2.0",
+  "version": "2.3.0",
   "web_accessible_resources": [
     {
       "resources": [
