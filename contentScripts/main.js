@@ -137,7 +137,8 @@ ${pointElementsWithColor[0].el?.hasAttributes() && Array.from(pointElementsWithC
   }, 0);
 
   const averageLuminosity = totalLuminosity / samplePoints.length;
-  return averageLuminosity && averageLuminosity < luminosity.threshold
+  const isAlreadyDark = averageLuminosity && averageLuminosity < luminosity.threshold
+  return isAlreadyDark
 }
 
 async function getDarkMode() {
