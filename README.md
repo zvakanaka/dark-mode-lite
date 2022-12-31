@@ -11,6 +11,16 @@ A dark mode add-on that won't slow you down
 
 ### Install from Add-ons for Firefox
 <!-- [Chrome Web Store]() -->
+<!-- Fast dark mode that only turns on if a page does not already have its own dark theme on.
+
+State of enable/disable dark mode checkbox toggle.
+
+For the extension's "enable" checkbox in its popup to broadcast to all tabs to turn on/off dark mode.
+
+To check if current page is "about:" URL - if so do not enable dark mode.
+-->
 [Firefox Add-on](https://addons.mozilla.org/firefox/addon/dark-mode-lite/)
 
 Logo from https://openmoji.org/library/emoji-1F56F/
+
+
