@@ -1,5 +1,10 @@
 body {
   font-family: monospace;
+  width: 200px;
+  height: 4rem; 
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
 }
 body:not([dark-mode="false"]) {
   background: black;
