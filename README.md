@@ -21,6 +21,5 @@ To check if current page is "about:" URL - if so do not enable dark mode.
 [Firefox Add-on](https://addons.mozilla.org/firefox/addon/dark-mode-lite/)  
 [Chrome Extension](https://chrome.google.com/webstore/detail/dark-mode-lite/bdldbecpjlifjdaiomhpkddjngjklonh)
 
-Logo from https://openmoji.org/library/emoji-1F56F/
-
+Logos from https://openmoji.org/library/emoji-1F56F/ and https://openmoji.org/library/emoji-2600/
 

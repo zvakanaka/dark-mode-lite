@@ -1,3 +1,16 @@
+const icons = {
+  active: {
+    48: '../icons/icon-48.png',
+    96: '../icons/icon-96.png',
+    128: '../icons/icon-128.png',
+  },
+  inactive: {
+    48: '../icons/icon-light-48.png',
+    96: '../icons/icon-light-96.png',
+    128: '../icons/icon-light-128.png',
+  },
+}
+
 if (typeof browser === "undefined") {
   var browser = chrome;
 }
@@ -13,6 +26,11 @@ async function getDarkMode() {
 
 async function setDarkMode(value, cb = () => { }) {
   await chrome.storage.local.set({ darkMode: value });
+
+  browser.browserAction.setIcon({
+    path: icons[value ? 'active' : 'inactive'],
+  });
+
   cb();
 }
 

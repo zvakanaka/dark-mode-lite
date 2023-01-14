@@ -44,9 +44,9 @@
     "service_worker": "background/main.js"
   },
   "icons": {
-    "48": "icons/icon_48.png",
-    "96": "icons/icon_96.png",
-    "128": "icons/icon_128.png"
+    "48": "icons/icon-48.png",
+    "96": "icons/icon-96.png",
+    "128": "icons/icon-128.png"
   },
   "action": {
     "default_icon": {

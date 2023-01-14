@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "Dark Mode Lite",
   "description": "A lightweight dark mode",
-  "version": "2.6.0",
+  "version": "2.7.0",
   "web_accessible_resources": [
     "browserAction/popup.js"
   ],
@@ -32,6 +32,7 @@
       ],
       "js": [
         "vendor/browser-polyfill.min.js",
+        "lib/main.js",
         "contentScripts/main.js"
       ],
       "run_at": "document_end"
@@ -43,8 +44,8 @@
     ]
   },
   "icons": {
-    "48": "icons/icon_48.png",
-    "96": "icons/icon_96.png",
-    "128": "icons/icon_128.png"
+    "48": "icons/icon-48.png",
+    "96": "icons/icon-96.png",
+    "128": "icons/icon-128.png"
   }
 }
