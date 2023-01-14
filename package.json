@@ -11,10 +11,9 @@
     "v2": "cp v2_manifest.json manifest.json",
     "v3": "cp v3_manifest.json manifest.json",
     "zip": "zip $(node -e \"const m=require('./manifest.json');process.stdout.write(m.name.toLowerCase().replace(/\\s+/g,'-')+'-'+m.version+'-manifest-v'+m.manifest_version.toString())\").zip -r * -x .git screenshots/ screenshots/* v2_manifest.json v3_manifest.json .gitignore .DS_Store .npmrc icons/E248_color.xcf icons/icon-fullsize.png *.zip @",
-    "icon_48": "convert ./icons/icon-fullsize.png -resize 48x48^ -background none -gravity center -extent 48x48 icons/icon_48.png",
-    "icon_96": "convert ./icons/icon-fullsize.png -resize 96x96^ -background none -gravity center -extent 96x96 icons/icon_96.png",
-    "icon_128": "convert ./icons/icon-fullsize.png -resize 128x128^ -background none -gravity center -extent 128x128 icons/icon_128.png",
-    "icons": "npm run icon_48 && npm run icon_96 && npm run icon_128"
+    "icon_custom": "convert ./icons/${npm_config_file} -resize ${npm_config_size}x${npm_config_size}^ -background none -gravity center -extent ${npm_config_size}x${npm_config_size} icons/${npm_config_outname}-${npm_config_size}.png",
+    "icon": "npm run icon_custom --file=icon-fullsize.png --size=${npm_config_size} --outname=icon; npm run icon_custom --file=icon-light-fullsize.png --size=${npm_config_size} --outname=icon-light",
+    "icons": "npm run icon --size=48; npm run icon --size=96; npm run icon --size=128"
   },
   "author": "Adam Quinton",
   "devDependencies": {
