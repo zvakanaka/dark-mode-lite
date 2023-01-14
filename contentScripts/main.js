@@ -11,18 +11,31 @@ const IGNORE_SELECTORS = [
   '[data-dark-mode-lite-ignore]'
 ];
 
+const FORCE_DARK_IF_EXISTS_SELECTORS = [
+  '.pdfViewer > .page'
+]
+
+const FORCE_LIGHT_IF_EXISTS_SELECTORS = [
+  'html[data-dark-mode-lite-ignore]',
+]
+
 function addDarkModeStyle() {
+  const invertCss = 'filter: invert(100%) hue-rotate(180deg)';
   const style = document.createElement('style');
   style.id = 'dark-mode-lite';
   style.textContent = `
-  :root {
-    filter: invert(100%) hue-rotate(180deg);
-    background: white;
-  }
-  
-  ${IGNORE_SELECTORS.join(',\n')} {
-    filter: invert(100%) hue-rotate(180deg);
-  }
+:root {
+  ${invertCss};
+  background: white;
+}
+
+.pdfViewer > .page {
+  ${invertCss};
+}
+
+${IGNORE_SELECTORS.join(',\n')} {
+  ${invertCss};
+}
 
 ${DEBUG && `
 .dark-mode-lite-sample {
@@ -76,9 +89,13 @@ function setDarkMode(value) {
 }
 
 function alreadyDark() {
-  if (document.querySelector('html[data-dark-mode-lite-ignore]')) {
-    // this site has opted out of this extension
-    console.log('ignoring site because HTML tag has data-dark-mode-lite-ignore attribute')
+  // console.log(document.querySelector(FORCE_DARK_IF_EXISTS_SELECTORS.join(', ')))
+  if (document.querySelector(FORCE_DARK_IF_EXISTS_SELECTORS.join(', '))) {
+    console.log('forcing extension on site because selector found that tells extension to')
+    return false;
+  }
+  if (document.querySelector(FORCE_LIGHT_IF_EXISTS_SELECTORS.join(', '))) {
+    console.log('ignoring extension on site because selector found that tells extension to')
     return true;
   }
   const luminosity = {

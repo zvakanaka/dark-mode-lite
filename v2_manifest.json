@@ -10,6 +10,17 @@
     "default_title": "Dark Mode Settings",
     "default_popup": "browserAction/popup.html"
   },
+  "commands": {
+    "keyboard-toggle-dark-mode": {
+      "suggested_key": {
+        "windows": "Ctrl+Shift+K",
+        "mac": "Command+Shift+K",
+        "chromeos": "Ctrl+Shift+K",
+        "linux": "Ctrl+Shift+K"
+      },
+      "description": "Toggle Dark Mode"
+    }
+  },
   "permissions": [
     "storage",
     "tabs"
@@ -26,6 +37,11 @@
       "run_at": "document_end"
     }
   ],
+  "background": {
+    "scripts": [
+      "background/main.js"
+    ]
+  },
   "icons": {
     "48": "icons/icon_48.png",
     "96": "icons/icon_96.png",

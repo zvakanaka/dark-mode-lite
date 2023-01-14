@@ -12,6 +12,17 @@
       "extension_ids": []
     }
   ],
+  "commands": {
+    "keyboard-toggle-dark-mode": {
+      "suggested_key": {
+        "windows": "Ctrl+Shift+K",
+        "mac": "Command+Shift+K",
+        "chromeos": "Ctrl+Shift+K",
+        "linux": "Ctrl+Shift+K"
+      },
+      "description": "Toggle Dark Mode"
+    }
+  },
   "permissions": [
     "storage",
     "tabs"
@@ -29,6 +40,9 @@
       "all_frames": true
     }
   ],
+  "background": {
+    "service_worker": "background/main.js"
+  },
   "icons": {
     "48": "icons/icon_48.png",
     "96": "icons/icon_96.png",
