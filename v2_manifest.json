@@ -32,7 +32,6 @@
       ],
       "js": [
         "vendor/browser-polyfill.min.js",
-        "lib/main.js",
         "contentScripts/main.js"
       ],
       "run_at": "document_end"
